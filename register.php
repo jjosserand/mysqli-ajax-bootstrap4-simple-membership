@@ -1,65 +1,97 @@
 <?php
 require_once('conn.php');
 if (isset($_POST['submit'])) {
-    	$name = $_POST['name'];
-    	$phone = $_POST['phone'];
-    	$address = $_POST['address'];
-    	$email = $_POST['email'];
-    	$sql = "INSERT into `details` (name, phone, address, email) values ('$name', '$phone', '$address', '$email')";
-    	if (mysqli_query($conn, $sql)) {
-		echo "New record created successfully";
-    		//header("location:index.php");
-		?>
-		<meta http-equiv="refresh" content="1;url=index.php">
-		<?php
-		exit;
+	if (empty($_POST['name'])) {
+		$errline = "Full name is a required field.";
+	} elseif (empty($_POST['phone'])) {
+		$errline = "Phone number is a required field.";
+	} elseif (empty($_POST['address'])) {
+		$errline = "Full address is a required field.";
+	} elseif (empty($_POST['email'])) {
+		$errline = "Email address is a required field.";
 	} else {
-		echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    		$name = $_POST['name'];
+    		$phone = $_POST['phone'];
+    		$address = $_POST['address'];
+    		$email = $_POST['email'];
+    		$sql = "INSERT into `details` (name, phone, address, email) values ('$name', '$phone', '$address', '$email')";
+    		if (mysqli_query($conn, $sql)) {
+			echo "New record created successfully";
+    			//header("location:index.php");
+			?>
+			<meta http-equiv="refresh" content="1;url=index.php">
+			<?php
+			exit;
+		} else {
+			echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+		}
+		mysqli_close($conn);
 	}
-	mysqli_close($conn);
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Using Bootstrap modal</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 </head>
 <body>
-<form method="post" action="register.php" role="form">
-	<div class="modal-body">
-		<div class="form-group">
-			<label for="id">ID</label>
-			<input type="text" class="form-control" id="id" name="id" value="<?php echo $mem['sn'];?>" readonly="true"/>
-
+<div class="container">
+	<form method="post" action="register.php" role="form">
+	<div class="row justify-content-center text-center">
+		<div class="col-sm-4 col-md-8 form-group">
+			<h1>Register</h1>
 		</div>
-		<div class="form-group">
+	</div>
+	<?php
+	if (!empty($errline)) {
+		?>
+		<div class="row justify-content-center text-center">
+			<div class="col-sm-4 col-md-8 form-group" style="color:red;font-weight:bold;">
+				<?=$errline;?>
+			</div>
+		</div>
+	<?php
+	}
+	?>
+	<div class="row justify-content-center">
+		<div class="col-sm-4 col-md-8 form-group">
 			<label for="name">Name</label>
-			<input type="text" class="form-control" id="name" name="name" value="<?php echo $mem['name'];?>" />
+			<input type="text" class="form-control" placeholder="Please enter your full name here" name="name" value="<?=$_POST['name'];?>" />
 		</div>
-		<div class="form-group">
+	</div>
+	<div class="row justify-content-center">
+		<div class="col-sm-4 col-md-8 form-group">
 			<label for="phone">Phone</label>
-				<input type="text" class="form-control" id="phone" name="phone" value="<?php echo $mem['phone'];?>" />
+				<input type="tel" class="form-control" placeholder="Please enter your phone number here" name="phone" value="<?=$_POST['phone'];?>" />
 		</div>
-		<div class="form-group">
+	</div>
+	<div class="row justify-content-center">
+		<div class="col-sm-4 col-md-8 form-group">
 			<label for="address">Address</label>
-			<input type="text" class="form-control" id="address" name="address" value="<?php echo $mem['address'];?>" />
+			<input type="text" class="form-control" placeholder="Please enter your complete address here" name="address" value="<?=$_POST['address'];?>" />
 
 		</div>
-		<div class="form-group">
-      <label for="email">Email</label>
-			<input type="text" class="form-control" id="email" name="email" value="<?php echo $mem['email'];?>" />
+	</div>
+	<div class="row justify-content-center">
+		<div class="col-sm-4 col-md-8 form-group">
+			<label for="email">Email</label>
+			<input type="email" class="form-control" placeholder="Please enter your best email address here" name="email" value="<?=$_POST['email'];?>" />
 		</div>
+	</div>
+	<div class="row justify-content-center">
+		<div class="col-sm-4 col-md-8 form-group">
+			<input type="submit" class="btn btn-primary" name="submit" value="Insert" />
 		</div>
-		<div class="modal-footer">
-			<input type="submit" class="btn btn-primary" name="submit" value="Insert" />&nbsp;
-			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		</div>
+	</div>
 	</form>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </body>
 </html>
