@@ -15,9 +15,9 @@ PHP 7, MySQLi compatible with PHP 7
 First, create a MySQLi database (ideally using your MySQL Database Wizard in cPanel, but not a requirement -- any method of creating this database in MySQLi is acceptable -- in the process you must also create a database user and give full permissions on the database to that user)<br/>
 Next, open conn.php in your favorite text editor (NOT MsWord!) and put the appropriate values in between the double quotes for these variables...<br/>
 ```
-$dbname = "cpaneladm_databasename";<br/>
-$username = "cpaneladm_databaseuser";<br/>
-$password = "yoursecurepasswordhere";<br/>
+$dbname = "cpaneladm_databasename";
+$username = "cpaneladm_databaseuser";
+$password = "yoursecurepasswordhere";
 ```
 You should have received the values you need for the above 3 variables at the end of the database creation process if you used the MySQL Database Wizard. If you created your database some other way, then go to your cPanel or other site manager (such as Plesk), find the MySQL Databases selection and you can view the values that you need there.<br/>
 Save that file.<br/>
