@@ -30,11 +30,11 @@ While the register.php program is meant for a user to register on your site, it 
 Of course, if you add any custom CSS to these pages, then that CSS will need to be accessible by all three pages (not conn.php, just the others). That should be no problem as long as you put the correct path in your CSS link statement.<br/>
 For instance, if you create a css directory in your admin area and you want index.php and editdata.php (which should also be in your admin directory), you would place a line like the following in the <head></head> section of those 2 pages...<br/>
 ```
-<link href="css/style.css" rel="stylesheet" type="text/css" /><br/>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
 ```
 Then, assuming your register.php is in your webroot directory, you place the following line in its <head></head> section...<br/>
 ```
-<link href="admin/css/style.css" rel="stylesheet" type="text/css" /><br/>
+<link href="admin/css/style.css" rel="stylesheet" type="text/css" />
 ```
 You will need to create your own login form and password change form for users who've registered to be able to login for access to some related content on your site. To make that work, you'll also need to add a password field to the database columns and add a form field, similarly, in the register and editdata forms, but probably not the index.php file, as you might not want to display the password except when editing it.<br/>
 I may add that here in later commits, but just thought I'd mention it, in case you really want to use this before I get to it.<br/>
